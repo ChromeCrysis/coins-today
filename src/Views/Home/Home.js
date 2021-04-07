@@ -5,6 +5,7 @@ import bootstrap from 'bootstrap/dist/css/bootstrap.min.css'
 
 //Import Navbar
 import Navbar from '../../components/navbar/navbar'
+import ScrollText from '../../components/navbar/scroll_text'
 
 //Import dos components de moedas de câmbio
 import USD from '../../components/conversor/USD'
@@ -24,6 +25,7 @@ function Home() {
     <Router>
     <div className="App">
       <Navbar/>
+      <ScrollText/>
       <Switch>
         <Route exact path="/" component={USD}/>
         <Route exact path="/USD" component={USD}/>

@@ -2,7 +2,7 @@ import React, {Component}from 'react';
 import {Link} from 'react-router-dom'
 import * as S from '../navbar/style'
 
-export default class Conversor extends React.Component {
+export default class Navbar extends React.Component {
 
     render(){
         return(

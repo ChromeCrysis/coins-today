@@ -21,10 +21,6 @@ export default class USD extends React.Component {
 
         return (
             <div>
-                <br/>
-                <label htmlFor="#moedaA">Valor em R$</label>
-                <input type="number" id="moedaA"/>
-                <h3></h3>
                 {USD, USDT ? (
                     <div className="container">
                         <h1>Valor do Dolar Americano agora: </h1>
