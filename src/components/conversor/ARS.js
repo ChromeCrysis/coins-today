@@ -4,13 +4,24 @@ import api from '../../services/api'
 export default class ARS extends React.Component {
     state = {
         ARS: {},
+        moedaA_valor: "",
+        moedaB_valor: 0,
     }
+
+    converter = this.converter.bind(this)
 
     async componentDidMount(){
         const res = await api.get('/all')
 
         this.setState({ ARS : res.data.ARS })
         //console.log(res.data)
+    }
+
+    converter(){
+        console.log(this.state.ARS)
+        let moedaB_valor = (parseFloat(this.state.moedaA_valor * this.state.ARS.ask))
+        this.setState({ moedaB_valor })
+        console.log(moedaB_valor )
     }
 
     render() {
@@ -43,15 +54,21 @@ export default class ARS extends React.Component {
                             <div className="row">
                                 <label for="#moedaA">{ARS.code}</label>
                                 <div className="col">
-                                    <input id="moedaA" className="col-md input form-control" type="number"/>
+                                    <input id="moedaA" className="col-md input form-control"
+                                    defaultValue="1"
+                                        onChange={(event) =>{
+                                            this.setState({moedaA_valor: event.target.value})
+                                        }}
+                                    />
+                                    <button onClick={this.converter}>Converter</button>
                                 </div>
                                 <div className="col">
                                     <h2>=</h2>
                                 </div>
                                 <label for="#moedaB">{ARS.codein}</label>
                                 <div className="col">
-                                    <input id="moedaB" className="col-md input form-control" type="number"
-                                    value="" contentEditable="false"/>
+                                    <input id="moedaB" className="col-md input form-control" 
+                                    value={this.state.moedaB_valor} onChange={this.state.moedaB_valor} contentEditable="false"/>
                                 </div>
                             </div>
                         </div>
