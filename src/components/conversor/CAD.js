@@ -1,36 +1,26 @@
 import React, {Component}from 'react';
 import api from '../../services/api'
 
+import * as S from './stye'
+
 export default class CAD extends React.Component {
     state = {
         CAD: {},
-        valor: 1,
-        result: null,
+        moedaA_valor: "",
+        moedaB_valor: 0,
     }
-    constructor(props){
-        super(props)
-        this.handleValor = this.handleValor.bind(this)
-    }
-    
 
+    converter = this.converter.bind(this)
+     
     async componentDidMount(){
         const res = await api.get('/all')
 
         this.setState({ CAD : res.data.CAD })
-        //console.log(this.state.CAD)
     }
 
-    async handleValor(event){
-        this.setState({
-            valor: Number(event.target.value)
-        })
-    }
-
-    async calcula(){
-        this.setState({
-            result: this.state.valor * this.state.CAD
-        })
-        console.log(this.state.valor)
+    async converter(){
+        let moedaB_valor = (parseFloat(this.state.moedaA_valor * this.state.CAD.ask))
+        this.setState({ moedaB_valor })
     }
 
     render() {
@@ -63,19 +53,27 @@ export default class CAD extends React.Component {
                             <div className="row">
                                 <label for="#moedaA">{CAD.code}</label>
                                 <div className="col">
-                                    <input id="moedaA" className="col-md input form-control" type="number"
-                                    defaultValue={this.state.valor} onChange={this.handleValor}/>
-                                    <button onClick={() => this.calcula()}>Calcular</button>
+                                    <input id="moedaA" className="col-md input form-control"
+                                    defaultValue="0"
+                                        onChange={(event) =>{
+                                            this.setState({moedaA_valor: event.target.value})
+                                        }}
+                                    />  
                                 </div>
                                 <div className="col">
                                     <h2>=</h2>
                                 </div>
                                 <label for="#moedaB">{CAD.codein}</label>
                                 <div className="col">
-                                    <input id="moedaB" className="col-md input form-control" type="number"
-                                        onChange={this.state.result} readOnly="true"/>
+                                    <input id="moedaB" className="col-md input form-control" 
+                                    value={parseFloat(this.state.moedaB_valor).toFixed(2)} onChange={this.state.moedaB_valor} contentEditable="false"/>
                                 </div>
                             </div>
+                            <S.Converter>
+                                <S.Convert_Button onClick={this.converter}
+                                    className="form-control col-md-2"
+                                >Converter</S.Convert_Button>
+                            </S.Converter>
                         </div>
                     </div>
                 ): (

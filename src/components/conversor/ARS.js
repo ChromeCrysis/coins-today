@@ -1,6 +1,8 @@
 import React, {Component}from 'react';
 import api from '../../services/api'
 
+import * as S from './stye'
+
 export default class ARS extends React.Component {
     state = {
         ARS: {},
@@ -18,10 +20,8 @@ export default class ARS extends React.Component {
     }
 
     converter(){
-        console.log(this.state.ARS)
         let moedaB_valor = (parseFloat(this.state.moedaA_valor * this.state.ARS.ask))
         this.setState({ moedaB_valor })
-        console.log(moedaB_valor )
     }
 
     render() {
@@ -46,9 +46,6 @@ export default class ARS extends React.Component {
                             <hr style={{
                                 backgroundColor: 'black'
                             }}/>
-                            <hr style={{
-                                backgroundColor: 'black'
-                            }}/>
                         <div>
                             <h1>Calculadora</h1>
                             <div className="row">
@@ -59,8 +56,7 @@ export default class ARS extends React.Component {
                                         onChange={(event) =>{
                                             this.setState({moedaA_valor: event.target.value})
                                         }}
-                                    />
-                                    <button onClick={this.converter}>Converter</button>
+                                    />  
                                 </div>
                                 <div className="col">
                                     <h2>=</h2>
@@ -68,9 +64,14 @@ export default class ARS extends React.Component {
                                 <label for="#moedaB">{ARS.codein}</label>
                                 <div className="col">
                                     <input id="moedaB" className="col-md input form-control" 
-                                    value={this.state.moedaB_valor} onChange={this.state.moedaB_valor} contentEditable="false"/>
+                                    value={parseFloat(this.state.moedaB_valor).toFixed(2)} onChange={this.state.moedaB_valor} contentEditable="false"/>
                                 </div>
                             </div>
+                            <S.Converter>
+                                <S.Convert_Button onClick={this.converter}
+                                    className="form-control col-md-2"
+                                >Converter</S.Convert_Button>
+                            </S.Converter>
                         </div>
                     </div>
                 ): (
